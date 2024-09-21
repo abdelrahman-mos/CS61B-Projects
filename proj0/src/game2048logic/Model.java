@@ -99,7 +99,12 @@ public class Model {
      * given a Tile object t, we get its value with t.value().
      */
     public boolean maxTileExists() {
-        // TODO: Task 2. Fill in this function.
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                if (board.tile(i, j) == null) continue;
+                if (board.tile(i, j).value() == MAX_PIECE) return true;
+            }
+        }
         return false;
     }
 
@@ -110,7 +115,26 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
-        // TODO: Task 3. Fill in this function.
+        if (emptySpaceExists()) return true;
+
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                boolean cond1=false, cond2=false, cond3=false, cond4=false;
+                if (i != board.size()-1) {
+                    cond1 = board.tile(i, j).value() == board.tile(i+1, j).value();
+                }
+                if (j != board.size()-1) {
+                    cond3 = board.tile(i, j).value() == board.tile(i, j+1).value();
+                }
+                if (i != 0) {
+                    cond2 = board.tile(i, j).value() == board.tile(i-1, j).value();
+                }
+                if (j != 0) {
+                    cond4 = board.tile(i, j).value() == board.tile(i, j-1).value();
+                }
+                if (cond1 || cond2 || cond3 || cond4) return true;
+            }
+        }
         return false;
     }
 
