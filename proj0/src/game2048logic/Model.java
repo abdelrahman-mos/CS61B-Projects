@@ -156,10 +156,19 @@ public class Model {
         Tile currTile = board.tile(x, y);
         if (currTile == null) return;
         int myValue = currTile.value();
-        int targetY = board.size() - 1;
-        for (int i = targetY; i >= 0; i--) {
-            if (board.tile(x, i) == null) continue;
-            if (board.tile(x, i).value() != myValue) targetY--;
+        int targetY = y;
+        for (int i = targetY+1; i < board.size(); i++) {
+            Tile upperTile = board.tile(x, i);
+            if (upperTile == null) {
+                targetY++;
+                continue;
+            }
+            if ((upperTile.value() != myValue) || (upperTile.wasMerged())) break;
+            if (upperTile.value() == myValue) {
+                targetY++;
+                break;
+            }
+
         }
         board.move(x, targetY, currTile);
 
