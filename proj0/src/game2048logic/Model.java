@@ -140,7 +140,6 @@ public class Model {
 
     /**
      * Moves the tile at position (x, y) as far up as possible.
-     *
      * Rules for Tilt:
      * 1. If two Tiles are adjacent in the direction of motion (ignoring empty space)
      *    and have the same value, they are merged into one Tile of twice the original
@@ -171,8 +170,9 @@ public class Model {
 
         }
         board.move(x, targetY, currTile);
-
-        // TODO: Tasks 5, 6, and 10. Fill in this function.
+        if (currTile.wasMerged()) {
+            score += tile(x, targetY).value();
+        }
     }
 
     /** Handles the movements of the tilt in column x of board B
@@ -192,7 +192,6 @@ public class Model {
             tiltColumn(i);
         }
         board.setViewingPerspective(Side.NORTH);
-        // TODO: Tasks 8 and 9. Fill in this function.
     }
 
     /** Tilts every column of the board toward SIDE.
